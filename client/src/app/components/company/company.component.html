@@ -1,0 +1,57 @@
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <form #companyForm="ngForm" (ngSubmit)="addCompany(companyForm)">
+                    <input type="hidden" name="_id" [(ngModel)]="companyService.selectedCompany._id">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="first_name" placeholder="name" [(ngModel)]="companyService.selectedCompany.first_name">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="company_name" placeholder="company" [(ngModel)]="companyService.selectedCompany.company_name">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="email" placeholder="email" [(ngModel)]="companyService.selectedCompany.email">
+                    </div>
+                    <div class="form-group">
+                       <input type="text" class="form-control" name="phone" placeholder="number" [(ngModel)]="companyService.selectedCompany.phone">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="description" placeholder="description" [(ngModel)]="companyService.selectedCompany.description">
+                    </div>
+                    <button class="btn btn-primary mr-2" (click)="resetForm(companyForm)">Clear</button>
+                    <button class="btn btn-success" >Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>name</th>
+                    <th>company</th>
+                    <th>email</th>
+                    <th>phone</th>
+                    <th>description</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let company of companyService.company">
+                    <td>{{company.first_name}}</td>
+                    <td>{{company.company_name}}</td>
+                    <td>{{company.email}}</td>
+                    <td>{{company.phone}}</td>
+                    <td>{{company.description}}</td>
+                    <td> <button class="btn btn-warning btn-sm" (click)="editCompany(company)"><i class="material-icons">edit</i></button>
+                        <button class="btn btn-danger btn-sm" (click)="deleteCompany(company._id)"><i class="material-icons">delete</i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <button class="btn btn-success" (click)="getmail()" >send mail</button>
+</div>  
