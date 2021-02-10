@@ -1,0 +1,44 @@
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <form #bulkuploadForm="ngForm">
+                    <div class="form-group">
+                        <input type="file" (change)="onFileChange($event)" multiple="false" class="form-control" placeholder="name">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <table class="table table-striped">
+            <thead>
+                
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of data">
+                    <td *ngFor="let val of row">
+                        {{val}}
+                    </td>
+                </tr>
+                <!-- <tr *ngFor="let company of companyService.company">
+                    <td>{{company.first_name}}</td>
+                    <td>{{company.company_name}}</td>
+                    <td>{{company.email}}</td>
+                    <td>{{company.phone}}</td>
+                    <td>{{company.description}}</td>
+                    <td> <button class="btn btn-warning btn-sm" (click)="editCompany(company)"><i class="material-icons">edit</i></button>
+                        <button class="btn btn-danger btn-sm" (click)="deleteCompany(company._id)"><i class="material-icons">delete</i></button>
+                    </td>
+                </tr> -->
+            </tbody>
+        </table>
+    </div>
+</div>
+<button (click)="export()">Export!</button>
+<!-- <div class="row">
+
+    <button class="btn btn-success" (click)="getmail()" >send mail</button>
+    <br><br>
+    <a class="btn btn-danger" routerLink="/bulkupload">bulk upload</a>
+</div>   -->
