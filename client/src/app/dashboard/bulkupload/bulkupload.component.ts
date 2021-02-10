@@ -1,3 +1,4 @@
+import { CompanyService } from 'src/app/services/company.service';
 import { Component, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx';
 type AOA = any[][];
@@ -7,12 +8,12 @@ type AOA = any[][];
   styleUrls: ['./bulkupload.component.css']
 })
 export class BulkuploadComponent implements OnInit {
-
-  constructor() { }
+  result: any;
+  constructor(private CompanyService:CompanyService) { }
 
   ngOnInit(): void {
   }
-  data: AOA = [[1, 2], [3, 4]];
+  data: AOA = [['first_name', 'company_name', 'email', 'phone', 'description'], ['test_name', 'company_test', 'test@gmail.com', '9940911317', 'test description']];
   wopts: XLSX.WritingOptions = { bookType: 'xlsx', type: 'array' };
   fileName: string = 'SheetJS.xlsx';
   onFileChange(evt: any) {
@@ -39,6 +40,27 @@ export class BulkuploadComponent implements OnInit {
           console.log(res[0]);
         }
       })
+      
+      var array = this.data;
+
+      var keys = array.shift();
+      var objects = array.map(function (values) {
+        return keys.reduce(function (o, k, i) {
+          o[k] = values[i];
+          return o;
+        }, {});
+      });
+      console.log(objects,'jjjj')
+      this.result = objects
+      this.CompanyService.createCompany(this.result).subscribe(
+        res => {
+          console.log(res);
+        },
+        err => {
+          console.log(err);
+        }
+      )
+      // console.log(objectdata , 'object data');
     };
     reader.readAsBinaryString(target.files[0]);
   }

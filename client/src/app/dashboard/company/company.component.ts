@@ -12,7 +12,7 @@ import { CompanyService } from 'src/app/services/company.service';
 export class CompanyComponent implements OnInit {
 
   emaillist: any[] = [];
-  constructor(public companyService: CompanyService,private MessageS: MessageService) { }
+  constructor(public companyService: CompanyService, private MessageS: MessageService) { }
 
   ngOnInit(): void {
     this.getCompany()
@@ -39,8 +39,8 @@ export class CompanyComponent implements OnInit {
         let reqobj = {
           email: email
         }
-        this.MessageS.sendMessage(reqobj).subscribe(data=>{
-          console.log(data,'maile');
+        this.MessageS.sendMessage(reqobj).subscribe(data => {
+          console.log(data, 'maile');
         })
       }
       ,
@@ -62,7 +62,9 @@ export class CompanyComponent implements OnInit {
           console.log(err);
         }
       )
-    } else {
+    }
+    else 
+    {
       this.companyService.createCompany(form.value).subscribe(
         res => {
           this.getCompany();
@@ -91,7 +93,6 @@ export class CompanyComponent implements OnInit {
         )
     }
     console.log(res);
-
   }
   editCompany(company: Company) {
     this.companyService.selectedCompany = company;

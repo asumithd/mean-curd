@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { BulkuploadComponent } from 'src/app/components/bulkupload/bulkupload.component';
+import { BulkuploadComponent } from './bulkupload.component';
+
 
 const routes: Routes = [
   {
