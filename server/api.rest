@@ -1,0 +1,30 @@
+###
+GET http://localhost:4000/api/companys
+###
+PUT http://localhost:4000/api/companys/6020ea8f094a3b1680f8c31d
+Content-Type: application/json
+
+{
+    "first_name":"deepan",
+    "company_name": "kt",
+    "email":"sumith@gmail.com",
+    "phone": "9940911317",
+    "description":"some description"
+}
+###
+GET http://localhost:4000/api/companys/6020e9d7094a3b1680f8c31c
+
+###
+DELETE http://localhost:4000/api/companys/6020e9d7094a3b1680f8c31c
+
+###
+POST http://localhost:4000/api/companys
+Content-Type: application/json
+
+{
+    "first_name":"sumith1",
+    "company_name": "kt",
+    "email":"sumith@gmail.com",
+    "phone": "9940911317",
+    "description":"some description"
+}
