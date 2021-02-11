@@ -12,6 +12,16 @@ export class BulkuploadComponent implements OnInit {
   constructor(private CompanyService:CompanyService) { }
 
   ngOnInit(): void {
+    this.CompanyService.getCompany().subscribe(
+      res => {
+        console.log(res);
+      },
+      err => {
+        console.log(err);
+      }
+    )
+    // console.log(objectdata , 'object data');
+  
   }
   data: AOA = [['first_name', 'company_name', 'email', 'phone', 'description'], ['test_name', 'company_test', 'test@gmail.com', '9940911317', 'test description']];
   wopts: XLSX.WritingOptions = { bookType: 'xlsx', type: 'array' };
@@ -32,14 +42,17 @@ export class BulkuploadComponent implements OnInit {
 
       /* save data */
       this.data = <AOA>(XLSX.utils.sheet_to_json(ws, { header: 1 }));
+      // this.data.map(res => {
+      //   if (res[0] === "no") {
+      //     console.log(res[0]);
+      //   } else {
+      //     console.log(res[0]);
+      //   }
+      // })
+
+      this.data =  this.data.filter(d =>{ 
+     return d.length > 0});
       console.log("data:", this.data);
-      this.data.map(res => {
-        if (res[0] === "no") {
-          console.log(res[0]);
-        } else {
-          console.log(res[0]);
-        }
-      })
       
       var array = this.data;
 
@@ -50,9 +63,10 @@ export class BulkuploadComponent implements OnInit {
           return o;
         }, {});
       });
-      console.log(objects,'jjjj')
+      
       this.result = objects
-      this.CompanyService.createCompany(this.result).subscribe(
+      console.log(this.result,'jjjj')
+      this.CompanyService.bulk(this.result).subscribe(
         res => {
           console.log(res);
         },

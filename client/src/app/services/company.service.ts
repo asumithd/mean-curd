@@ -29,4 +29,7 @@ export class CompanyService {
   editCompany(company: Company) {
     return this.http.put(this.URL_API + '/' + company._id , company);
   }
+  bulk(company: Company) {
+    return this.http.post(this.URL_API + '/test', company);
+  }
 }

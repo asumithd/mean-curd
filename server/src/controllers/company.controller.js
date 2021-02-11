@@ -14,10 +14,28 @@ companyctrl.createCompany = async (req, res) => {
         message: "Company Created"
     })
 }
+
+companyctrl.bulkcompany = async (req, res) => { 
+    console.log(req.body)
+    await Company.insertMany(req.body)
+    .then(function(docs) {
+         // do something with docs
+         res.send({
+            message: docs
+        })
+    })
+    .catch(function(err) {
+        // error handling here
+    });
+}
+
+
 companyctrl.getCompany = async (req, res) => {
     const company = await Company.findById(req.params.id);
     res.send(company);
 }
+
+
 companyctrl.editCompany = async (req, res) => {
     await Company.findByIdAndUpdate(req.params.id, req.body);
     res.json({

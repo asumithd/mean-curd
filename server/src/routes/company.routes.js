@@ -8,5 +8,6 @@ router.get('/:id',companyctrl.getCompany);
 router.put('/:id',companyctrl.editCompany);
 router.delete('/:id',companyctrl.deleteCompany);
 router.post('/',companyctrl.createCompany);
+router.post('/test',companyctrl.bulkcompany);
 
 module.exports = router;
