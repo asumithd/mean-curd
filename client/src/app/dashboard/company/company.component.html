@@ -1,6 +1,6 @@
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <div class="card">
             <div class="card-body">
                 <form #companyForm="ngForm" (ngSubmit)="addCompany(companyForm)">
@@ -20,13 +20,17 @@
                     <div class="form-group">
                         <input type="text" class="form-control" name="description" placeholder="description" [(ngModel)]="companyService.selectedCompany.description">
                     </div>
-                    <button class="btn btn-primary mr-2" (click)="resetForm(companyForm)">Clear</button>
-                    <button class="btn btn-success" >Save</button>
+                    <div class="m-3">
+                        <button class="btn btn-primary " (click)="resetForm(companyForm)">Clear</button>
+                        <button class="btn btn-success " >Save</button>
+                    </div>                    
                 </form>
             </div>
         </div>
     </div>
-    <div class="col-md-8">
+</div>
+<div class="row">
+    <div class="col-md-12">
         <table class="table table-striped">
             <thead>
                 <tr>
