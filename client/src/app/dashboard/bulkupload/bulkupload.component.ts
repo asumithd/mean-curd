@@ -1,6 +1,11 @@
+import { MessageService } from './../../services/message.service';
+import { NgForm } from '@angular/forms';
+import { Img } from './../../models/img';
 import { CompanyService } from 'src/app/services/company.service';
 import { Component, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx';
+import { ImgService } from 'src/app/services/img.service';
+
 type AOA = any[][];
 @Component({
   selector: 'app-bulkupload',
@@ -9,10 +14,16 @@ type AOA = any[][];
 })
 export class BulkuploadComponent implements OnInit {
   result: any;
-  constructor(private CompanyService:CompanyService) { }
+  emaillist: any;
+  fileToUpload: any;
+  imageUrl: any;
+  constructor(private CompanyService: CompanyService,
+    public ImgService: ImgService,
+    private MessageS: MessageService) { }
 
   ngOnInit(): void {
-    this.CompanyService.getCompany().subscribe(
+    this.getImg();
+    this.ImgService.getImg().subscribe(
       res => {
         console.log(res);
       },
@@ -21,8 +32,88 @@ export class BulkuploadComponent implements OnInit {
       }
     )
     // console.log(objectdata , 'object data');
-  
+
   }
+  
+  resetForm(form: NgForm) {
+    form.reset();
+  }
+  getmail() {
+    this.CompanyService.getCompany().subscribe(
+      res => {
+        res.forEach(element => {
+          let name = element.email;
+          this.emaillist = [...this.emaillist, name];
+        });
+        let email = this.emaillist;
+        let reqobj = {
+          email: email
+        }
+        this.MessageS.sendMessage(reqobj).subscribe(data => {
+          console.log(data, 'maile');
+        })
+      }
+      ,
+      err => {
+        console.log(err);
+      }
+    )
+  }
+  addImg(form: NgForm) {
+    if (form.value._id) {
+      this.ImgService.editImg(form.value).subscribe(
+        res => {
+          console.log(res);
+        },
+        err => {
+          console.log(err);
+        }
+      )
+    }
+    else {
+      this.ImgService.createImg(form.value).subscribe(
+        res => {
+          this.getImg();
+          form.reset();
+          console.log(res);
+        },
+        err => {
+          console.log(err);
+        }
+      )
+    }
+
+  }
+  getImg() {
+    this.ImgService.getImg().subscribe(
+      res => {
+        this.ImgService.img = res;
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
+  deleteImg(id) {
+    const res = confirm('Are you delete the record?');
+    if (res) {
+      this.ImgService.deleteImg(id)
+        .subscribe(
+          resp => {
+            this.getImg();
+            console.log(resp);
+          },
+          err => {
+            console.log(err);
+          }
+        )
+    }
+    console.log(res);
+  }
+  editCompany(img: Img) {
+    this.ImgService.selectedImg = img;
+  }
+
   data: AOA = [['first_name', 'company_name', 'email', 'phone', 'description'], ['test_name', 'company_test', 'test@gmail.com', '9940911317', 'test description']];
   wopts: XLSX.WritingOptions = { bookType: 'xlsx', type: 'array' };
   fileName: string = 'SheetJS.xlsx';
@@ -50,10 +141,11 @@ export class BulkuploadComponent implements OnInit {
       //   }
       // })
 
-      this.data =  this.data.filter(d =>{ 
-     return d.length > 0});
+      this.data = this.data.filter(d => {
+        return d.length > 0
+      });
       console.log("data:", this.data);
-      
+
       var array = this.data;
 
       var keys = array.shift();
@@ -63,9 +155,9 @@ export class BulkuploadComponent implements OnInit {
           return o;
         }, {});
       });
-      
+
       this.result = objects
-      console.log(this.result,'jjjj')
+      console.log(this.result, 'jjjj')
       this.CompanyService.bulk(this.result).subscribe(
         res => {
           console.log(res);

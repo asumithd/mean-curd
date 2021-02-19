@@ -19,13 +19,13 @@ companyctrl.bulkcompany = async (req, res) => {
     console.log(req.body)
     await Company.insertMany(req.body)
     .then(function(docs) {
-         // do something with docs
+         
          res.send({
             message: docs
         })
     })
     .catch(function(err) {
-        // error handling here
+        
     });
 }
 
@@ -67,7 +67,12 @@ companyctrl.postmail = async( req,res)=>{
         from: 'sullansumith@gmail.com',
         to: req.body.email,
         subject: 'arra',
-        text: 'New try!'
+        text: 'New try!',
+        attachments: [{
+            filename: 'img.jpg',
+            path: __dirname +'/img.jpg',
+         //same cid value as in the html img src
+        }]
     };
     
     transporter.sendMail(mailOptions, (error, info) => {

@@ -21,24 +21,51 @@
                         {{val}}
                     </td>
                 </tr>
-                <!-- <tr *ngFor="let company of companyService.company">
-                    <td>{{company.first_name}}</td>
-                    <td>{{company.company_name}}</td>
-                    <td>{{company.email}}</td>
-                    <td>{{company.phone}}</td>
-                    <td>{{company.description}}</td>
-                    <td> <button class="btn btn-warning btn-sm" (click)="editCompany(company)"><i class="material-icons">edit</i></button>
-                        <button class="btn btn-danger btn-sm" (click)="deleteCompany(company._id)"><i class="material-icons">delete</i></button>
-                    </td>
-                </tr> -->
+                
             </tbody>
         </table>
     </div>
 </div>
 <button class="btn btn-primary " (click)="export()">Export!</button>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <form #imgForm="ngForm" (ngSubmit)="addImg(imgForm)">
+                    <input type="hidden" name="_id" [(ngModel)]="ImgService.selectedImg._id">
+                    <div class="form-group">
+                        <!-- <input type="text" class="form-control" placeholder="img" name="img" [(ngModel)]="ImgService.selectedImg.img"> -->
+                        <!-- <input type="text" class="form-control" name="phone" placeholder="number" [(ngModel)]="companyService.selectedCompany.phone"> -->
+                        <input type="file" multiple="false" class="form-control" placeholder="img" name="img" [(ngModel)]="ImgService.selectedImg.img">
+                    </div>
+                    <button class="btn btn-success">save</button>
+                    <!-- <button class="btn btn-success" type="submit" (click)="getmail()" >send mail</button> -->
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <table class="table table-striped">
+            <thead>
+                <th></th>
+            </thead>
+            <tbody>
+
+                <tr *ngFor="let img of ImgService.img">
+                    <!-- <td>{{img.img}}</td> -->
+                    <td><img [src]="img.img"/></td>
+                    
+                    <td> <button class="btn btn-warning btn-sm" (click)="editImg(img)"><i class="material-icons">edit</i></button>
+                        <button class="btn btn-danger btn-sm" (click)="deleteImg(img._id)"><i class="material-icons">delete</i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 <!-- <div class="row">
 
-    <button class="btn btn-success" (click)="getmail()" >send mail</button>
     <br><br>
     <a class="btn btn-danger" routerLink="/bulkupload">bulk upload</a>
 </div>   -->

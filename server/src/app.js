@@ -10,5 +10,6 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use('/api/companys',require('./routes/company.routes'));
+app.use('/api/imgs',require('./routes/img.router'));
 app.use('/api/sendmail',require('./routes/email.router'));
 module.exports = app;
